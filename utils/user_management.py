@@ -49,3 +49,37 @@ def register_user(first_name, last_name, email, country, password, password_hint
         print(f"Error registering user {email}: {e}")
         return {"status": "error", "message": f"An error occurred while registering the user: {str(e)}"}
 
+def check_user(email, password):
+    # """
+    # Validates user credentials by checking the email and password against the database.
+
+    # Args:
+    #     email (str): The email address of the user.
+    #     password (str): The plaintext password provided by the user.
+
+    # Returns:
+    #     tuple: A tuple containing the user's details (user_id, email, first_name, last_name, subscription_level)
+    #            if the credentials are valid. Returns (None, None, None, None, None) otherwise.
+    # """
+    # # Query to fetch user details by email
+    # query = '''
+    #     SELECT user_id, email, first_name, last_name, subscription_level, password_hash
+    #     FROM users
+    #     WHERE email = :email
+    # '''
+    # # Execute the query to get the user details
+    # result = execute_query(query, {'email': email})
+
+    # if result:
+    #     # Extract user details
+    #     user_id, email, first_name, last_name, subscription_level, password_hash = result[0]
+    #     print(f"User found: {email}, {first_name}, {subscription_level}")
+    #     print(f"Stored hash: {password_hash}")
+    #     print(f"Computed hash: {hash_password(password)}")
+
+    #     # Validate the password
+    #     if hash_password(password) == password_hash:
+    #         return user_id, email, first_name, last_name, subscription_level
+
+    # # Return None values if authentication fails
+    # return None, None, None, None, None

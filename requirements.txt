@@ -3,6 +3,6 @@ psycopg2
 hashlib
 metaapi_cloud_sdk
 asyncio
-datatime
+datetime
 st_social_media_links
 streamlit_extras
