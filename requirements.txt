@@ -1,1 +1,8 @@
 streamlit
+psycopg2
+hashlib
+metaapi_cloud_sdk
+asyncio
+datatime
+st_social_media_links
+streamlit_extras
