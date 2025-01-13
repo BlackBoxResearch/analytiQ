@@ -97,7 +97,7 @@ def login_page():
                     marketing_preferences = st.checkbox("Opt out of communications")
                     terms_and_conditions = st.checkbox("I agree to the Terms and Conditions")
 
-                    if st.form_submit_button("Sign Up", use_container_width=True, type='secondary', icon=":material/app_registration:"):
+                    if st.form_submit_button("Proceed", use_container_width=True, type='secondary', icon=":material/app_registration:"):
                         if password != repeat_password:
                             st.error("Passwords do not match.")
                         elif not first_name or not last_name or not email or not password:
@@ -109,7 +109,7 @@ def login_page():
                             st.success("Registration complete!", icon="🚀")
 
 
-            if st.button("Sign Up For Free!", icon=":material/app_registration:", use_container_width=True):
+            if st.button("Sign Up", icon=":material/app_registration:", use_container_width=True):
                 sign_up()
     
 
