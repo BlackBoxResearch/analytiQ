@@ -5,14 +5,14 @@ import asyncio
 from utils.account_management import deploy_account
 from utils.database_management import execute_query
 
-
 def accounts_page():
-    st.write("accounts")
+    user_id = st.session_state["user_id"]
+
+    st.subheader(f'My Accounts')
 
     @st.dialog("Add Account")
     def add_account_dialog():
         # Check the number of active accounts for the current user
-        user_id = st.session_state["user_id"]
         query = "SELECT COUNT(*) AS active_account_count FROM accounts WHERE user_id = %s AND active = TRUE"
         result = execute_query(query, (user_id,))
         
@@ -60,11 +60,27 @@ def accounts_page():
                     st.rerun()
                 except Exception as e:
                     st.error(f"Failed to add account: {e}")
-        
     
-    open_add_account_dialog = st.button(label="Add Account", key="open_add_account_dialog", icon=":material/add_circle:", type="secondary", use_container_width=True)
+    # Execute the query
+    query = "SELECT login FROM accounts WHERE user_id = %s AND active = TRUE"
+    user_accounts = execute_query(query, (user_id,))
 
-    if open_add_account_dialog: add_account_dialog()
-    
+    # Extract login values from the query results
+    if user_accounts:
+        account_options = [account['login'] for account in user_accounts]  # Extracting only the login values
+    else:
+        account_options = ["No accounts available"]
+
+    col1, col2 = st.columns(2, vertical_alignment="bottom")
+
+    with col1:
+
+        if st.button(label="Add Account", key="open_add_account_dialog", icon=":material/add_circle:", type="secondary", use_container_width=True):
+            add_account_dialog()
+
+    with col2:
+        # Create the selectbox with the processed options
+        account_selection = st.selectbox("Select Account", account_options)
+
 if __name__ == "__main__":
     accounts_page()
