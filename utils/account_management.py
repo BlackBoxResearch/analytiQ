@@ -1,4 +1,4 @@
-from trade_management import process_deals, save_positions
+from utils.trade_management import process_deals, save_positions
 from utils.database_management import execute_query
 from metaapi_cloud_sdk import MetaApi
 import streamlit as st
