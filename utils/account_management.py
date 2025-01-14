@@ -4,6 +4,7 @@ from metaapi_cloud_sdk import MetaApi
 import streamlit as st
 from datetime import datetime, timezone
 
+
 TOKEN = st.secrets['META_API_TOKEN']
 
 def save_account(user_id, account_id, account_info, account_name):

@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import nest_asyncio
 import asyncio
 from utils.account_management import deploy_account
 from utils.database_management import execute_query
@@ -37,8 +38,9 @@ def accounts_page():
         if confirm_add_account_button:
             with st.spinner("Adding your account..."):
                 try:
-                    # Run the async function in the event loop
-                    account = asyncio.run(deploy_account(
+                    # Use the current event loop instead of asyncio.run
+                    loop = asyncio.get_event_loop()
+                    account = loop.run_until_complete(deploy_account(
                         user_id=user_id,
                         name=account_name,
                         login=login,
@@ -48,10 +50,11 @@ def accounts_page():
                     ))
                     st.success("Account successfully added!")
                     time.sleep(2)
-                    st.rerun()
+                    st.experimental_rerun()
                 except Exception as e:
                     st.error(f"Failed to add account: {e}")
-
+        
+    
     open_add_account_dialog = st.button(label="Add Account", key="open_add_account_dialog", icon=":material/add_circle:", type="secondary", use_container_width=True)
 
     if open_add_account_dialog: add_account_dialog()
