@@ -1,6 +1,5 @@
 streamlit
 psycopg2-binary
-hashlib
 metaapi_cloud_sdk
 asyncio
 datetime
