@@ -36,10 +36,17 @@ def accounts_page():
         confirm_add_account_button = st.button("Add Account", key="confirm_add_account_button", icon=":material/check:", type="secondary", use_container_width=True)
 
         if confirm_add_account_button:
-            with st.spinner("Adding your account..."):
+            with st.spinner("Deploying account and fetching trade history... (This may take a couple of minutes!)"):
                 try:
-                    # Use the current event loop instead of asyncio.run
-                    loop = asyncio.get_event_loop()
+                    # Ensure there is an event loop in the current thread
+                    try:
+                        loop = asyncio.get_event_loop()
+                    except RuntimeError:
+                        # No event loop in the current thread; create a new one
+                        loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(loop)
+                    
+                    # Run the async function in the current thread's event loop
                     account = loop.run_until_complete(deploy_account(
                         user_id=user_id,
                         name=account_name,
@@ -50,7 +57,7 @@ def accounts_page():
                     ))
                     st.success("Account successfully added!")
                     time.sleep(2)
-                    st.experimental_rerun()
+                    st.rerun()
                 except Exception as e:
                     st.error(f"Failed to add account: {e}")
         
