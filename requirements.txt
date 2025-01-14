@@ -1,5 +1,6 @@
 streamlit
 psycopg2
+psycopg2-binary
 hashlib
 metaapi_cloud_sdk
 asyncio
