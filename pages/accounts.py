@@ -1,7 +1,9 @@
 import streamlit as st
 import time
+import asyncio
 from utils.account_management import deploy_account
 from utils.database_management import execute_query
+
 
 def accounts_page():
     st.write("accounts")
@@ -34,19 +36,21 @@ def accounts_page():
 
         if confirm_add_account_button:
             with st.spinner("Adding your account..."):
-                if deploy_account(
-                    user_id=user_id,
-                    name=account_name,
-                    login=login,
-                    password=password,
-                    server_name=server,
-                    platform=platform,
-                ):
+                try:
+                    # Run the async function in the event loop
+                    account = asyncio.run(deploy_account(
+                        user_id=user_id,
+                        name=account_name,
+                        login=login,
+                        password=password,
+                        server_name=server,
+                        platform=platform,
+                    ))
                     st.success("Account successfully added!")
                     time.sleep(2)
                     st.rerun()
-                else:
-                    st.error("Failed to add account.")
+                except Exception as e:
+                    st.error(f"Failed to add account: {e}")
 
     open_add_account_dialog = st.button(label="Add Account", key="open_add_account_dialog", icon=":material/add_circle:", type="secondary", use_container_width=True)
 
