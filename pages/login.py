@@ -112,6 +112,5 @@ def login_page():
             if st.button("Sign Up", icon=":material/app_registration:", use_container_width=True):
                 sign_up()
     
-
 if __name__ == "__main__":
     login_page()
