@@ -34,8 +34,8 @@ def metric_tile(key, stat, value, height, border, tooltip):
         st.markdown(
             f"""
                 <div style="line-height: 1.5;">
-                    <p style="margin: 0; font-size: 0.85em; color: {caption_color};">{stat}</p>
-                    <p style="margin: 0; font-size: 1.3em; font-weight: bold; color: {light_text_color};">{value}</p>
+                    <p style="margin: 0; font-size: 0.9em; color: {caption_color};">{stat}</p>
+                    <p style="margin: 0; font-size: 1.4em; font-weight: bold; color: {light_text_color};">{value}</p>
                 </div>
                 """,
             unsafe_allow_html=True, help=tooltip
