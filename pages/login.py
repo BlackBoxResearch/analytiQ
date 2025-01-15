@@ -30,10 +30,13 @@ countries = [
 @st.dialog("Forgot Password")
 def forgot_password_dialog():
     with st.form("forgot_password_form", border=False):
-        recovery_email = st.text_input("Email", placeholder="Recovery Email")
+        recovery_email = st.text_input("Email", placeholder="Email Address")
 
         if st.form_submit_button("Submit", use_container_width=True):
-            st.info(f"Recovery email sent to {recovery_email}!")
+            if recovery_email != '':
+                st.info(f"Recovery email sent to {recovery_email}!")
+            else:
+                st.error("Invalid email address!")
 
 @st.dialog("Sign Up")
 def sign_up_dialog():
@@ -59,6 +62,7 @@ def sign_up_dialog():
             else:
                 register_user(first_name, last_name, email, country, password, password_hint, marketing_preferences)
                 st.success("Registration complete!", icon="🚀")
+                st.rerun()
 
 def login_page():
     with st.container(border=False):

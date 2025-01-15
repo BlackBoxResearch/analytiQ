@@ -4,11 +4,60 @@ import nest_asyncio
 import asyncio
 from utils.account_management import deploy_account
 from utils.database_management import execute_query
+from static.elements import tile, metric_tile
+
+def summary_tiles(height, gain_value, win_rate_value, profit_factor_value, analytiq_score_value):
+    summary_tile_1, summary_tile_2, summary_tile_3, summary_tile_4 = st.columns(4, vertical_alignment="bottom")
+
+    with summary_tile_1:
+        metric_tile(key="summary_tile_1", 
+                    stat="Gain", 
+                    value=gain_value, 
+                    height=height, 
+                    border=True, 
+                    tooltip=None
+                    )
+    
+    with summary_tile_2:
+        metric_tile(key="summary_tile_2", 
+                    stat="Win Rate", 
+                    value=win_rate_value, 
+                    height=height, 
+                    border=True, 
+                    tooltip=None
+                    )
+    
+    with summary_tile_3:
+        metric_tile(key="summary_tile_3", 
+                    stat="Profit Factor", 
+                    value=profit_factor_value, 
+                    height=height, 
+                    border=True, 
+                    tooltip=None
+                    )
+    
+    with summary_tile_4:
+        metric_tile(key="summary_tile_4", 
+                    stat="AnalytiQ Score", 
+                    value=analytiq_score_value, 
+                    height=height, 
+                    border=True, 
+                    tooltip=None
+                    )
+
+
+
+
+
+
+
+
+
 
 def accounts_page():
     user_id = st.session_state["user_id"]
 
-    st.subheader(f'My Accounts')
+    st.subheader(f'My Accounts', anchor=False)
 
     @st.dialog("Add Account")
     def add_account_dialog():
@@ -36,7 +85,9 @@ def accounts_page():
         confirm_add_account_button = st.button("Add Account", key="confirm_add_account_button", icon=":material/check:", type="secondary", use_container_width=True)
 
         if confirm_add_account_button:
-            with st.spinner("Deploying account and fetching trade history... (This may take a couple of minutes!)"):
+            with st.spinner("Deploying account..."):
+                time.sleep(3)
+            with st.spinner("Fetching trade history..."):
                 try:
                     # Ensure there is an event loop in the current thread
                     try:
@@ -62,25 +113,36 @@ def accounts_page():
                     st.error(f"Failed to add account: {e}")
     
     # Execute the query
-    query = "SELECT login FROM accounts WHERE user_id = %s AND active = TRUE"
+    query = "SELECT account_id, name, login FROM accounts WHERE user_id = %s AND active = TRUE"
     user_accounts = execute_query(query, (user_id,))
 
-    # Extract login values from the query results
+    # Extract name and login values to display in the desired format
     if user_accounts:
-        account_options = [account['login'] for account in user_accounts]  # Extracting only the login values
+        account_options = [f"{account['name']} ({account['login']})" for account in user_accounts]  # Format as "name (login)"
+        select_disabled = False
     else:
         account_options = ["No accounts available"]
+        select_disabled = True
 
-    col1, col2 = st.columns(2, vertical_alignment="bottom")
+    select_account_column, add_account_column = st.columns(2, vertical_alignment="bottom")
 
-    with col1:
+    account_selection = select_account_column.selectbox("Select Account", account_options, disabled=select_disabled)
 
-        if st.button(label="Add Account", key="open_add_account_dialog", icon=":material/add_circle:", type="secondary", use_container_width=True):
-            add_account_dialog()
+    if add_account_column.button(label="Add Account", key="open_add_account_dialog", icon=":material/add_circle:", type="secondary", use_container_width=True):
+         add_account_dialog()
 
-    with col2:
-        # Create the selectbox with the processed options
-        account_selection = st.selectbox("Select Account", account_options)
+    if account_selection != "No accounts available":
+        gain = 55
+        win_rate = 64
+        profit_factor = 1.32
+        analytiq_score = 75
+        summary_tiles(
+            55, 
+            f"{gain}%",
+            f"{win_rate}%",
+            f"{profit_factor}",
+            f"{analytiq_score}",
+        )
 
 if __name__ == "__main__":
     accounts_page()
