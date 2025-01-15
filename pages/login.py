@@ -30,7 +30,7 @@ countries = [
 @st.dialog("Forgot Password")
 def forgot_password_dialog():
     with st.form("forgot_password_form", border=False):
-        recovery_email = st.text_input("Email")
+        recovery_email = st.text_input("Email", placeholder="Recovery Email")
 
         if st.form_submit_button("Submit", use_container_width=True):
             st.info(f"Recovery email sent to {recovery_email}!")
