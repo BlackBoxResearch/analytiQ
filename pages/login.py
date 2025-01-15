@@ -28,6 +28,12 @@ countries = [
 ]
 
 def login_page():
+
+    @st.dialog("Forgot Password")
+    def forgot_password():
+        recovery_email = st.text_input("Email")
+
+
     with st.container(border=False):
         col1, col2, col3 = st.columns([1,3,1], vertical_alignment="top")
         
@@ -51,7 +57,8 @@ def login_page():
                 password_input = st.text_input("Password", type="password")
                 col1, col2 = st.columns(2, vertical_alignment="top")
                 #col1.checkbox("Remember Me")
-                col1.button("**Forgot Password?**", type="tertiary")
+                if col1.button("**Forgot Password?**", type="tertiary"):
+                    forgot_password()
                 login_button = st.button(key="login_button", label="Log In", use_container_width=True, type='secondary', icon=":material/login:")
                 
                 if login_button:
