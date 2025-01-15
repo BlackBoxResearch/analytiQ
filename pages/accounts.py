@@ -3,7 +3,7 @@ import time
 import nest_asyncio
 import asyncio
 import pandas as pd
-from utils.account_management import deploy_account
+from utils.account_management import deploy_account, undeploy_account
 from utils.database_management import execute_query
 from static.elements import tile, metric_tile
 
@@ -45,59 +45,6 @@ def summary_tiles(height, gain_value, win_rate_value, profit_factor_value, analy
                     border=True, 
                     tooltip=None
                     )
-
-@st.dialog("Add Account")
-def add_account_dialog(user_id):
-    # Check the number of active accounts for the current user
-    query = "SELECT COUNT(*) AS active_account_count FROM accounts WHERE user_id = %s AND active = TRUE"
-    result = execute_query(query, (user_id,))
-    
-    if result:
-        active_account_count = result[0]["active_account_count"]
-    else:
-        st.error("Could not retrieve account information. Please try again later.")
-        return
-
-    if active_account_count >= 3:
-        st.warning("You have reached the maximum limit of 3 connected accounts.")
-        return
-
-    # User input for adding a new account
-    account_name = st.text_input("Account Name", placeholder="e.g., Main Account")
-    login = st.text_input("Account Number", placeholder="Account Number")
-    password = st.text_input("Investor Password", placeholder="Investor Password", type="password")
-    server = st.text_input("Server", placeholder="Server")
-    platform = st.selectbox("Platform", ("mt4", "mt5"), placeholder="Platform")
-
-    confirm_add_account_button = st.button("Add Account", key="confirm_add_account_button", icon=":material/check:", type="secondary", use_container_width=True)
-
-    if confirm_add_account_button:
-        with st.spinner("Deploying account..."):
-            time.sleep(3)
-        with st.spinner("Fetching trade history..."):
-            try:
-                # Ensure there is an event loop in the current thread
-                try:
-                    loop = asyncio.get_event_loop()
-                except RuntimeError:
-                    # No event loop in the current thread; create a new one
-                    loop = asyncio.new_event_loop()
-                    asyncio.set_event_loop(loop)
-                
-                # Run the async function in the current thread's event loop
-                loop.run_until_complete(deploy_account(
-                    user_id=user_id,
-                    name=account_name,
-                    login=login,
-                    password=password,
-                    server_name=server,
-                    platform=platform,
-                ))
-                st.success("Account successfully added!")
-                time.sleep(2)
-                st.rerun()
-            except Exception as e:
-                st.error(f"Failed to add account: {e}")
     
 def get_trades(account_id):
     """
@@ -153,8 +100,57 @@ def accounts_page():
 
     account_selection = select_account_column.selectbox("Select Account", account_options, disabled=select_disabled)
 
-    if add_account_column.button(label="Add Account", key="open_add_account_dialog", icon=":material/add_circle:", type="primary", use_container_width=True):
-         add_account_dialog(user_id)
+    with add_account_column.popover("Add Account", icon=":material/add_circle:", use_container_width=True):
+        # Check the number of active accounts for the current user
+        query = "SELECT COUNT(*) AS active_account_count FROM accounts WHERE user_id = %s AND active = TRUE"
+        result = execute_query(query, (user_id,))
+        
+        if result:
+            active_account_count = result[0]["active_account_count"]
+        else:
+            st.error("Could not retrieve account information. Please try again later.")
+            return
+
+        if active_account_count >= 3:
+            st.warning("You have reached the maximum limit of 3 connected accounts.")
+            return
+
+        # User input for adding a new account
+        account_name = st.text_input("Account Name", placeholder="e.g., Main Account")
+        login = st.text_input("Account Number", placeholder="Account Number")
+        password = st.text_input("Investor Password", placeholder="Investor Password", type="password")
+        server = st.text_input("Server", placeholder="Server")
+        platform = st.selectbox("Platform", ("mt4", "mt5"), placeholder="Platform")
+
+        confirm_add_account_button = st.button(label="Add Account", key="confirm_add_account_button", icon=":material/check:", type="primary", use_container_width=True)
+
+        if confirm_add_account_button:
+            with st.spinner("Deploying account..."):
+                time.sleep(3)
+            with st.spinner("Fetching trade history..."):
+                try:
+                    # Ensure there is an event loop in the current thread
+                    try:
+                        loop = asyncio.get_event_loop()
+                    except RuntimeError:
+                        # No event loop in the current thread; create a new one
+                        loop = asyncio.new_event_loop()
+                        asyncio.set_event_loop(loop)
+                    
+                    # Run the async function in the current thread's event loop
+                    loop.run_until_complete(deploy_account(
+                        user_id=user_id,
+                        name=account_name,
+                        login=login,
+                        password=password,
+                        server_name=server,
+                        platform=platform,
+                    ))
+                    st.success("Account successfully added!")
+                    time.sleep(2)
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"Failed to add account: {e}")
 
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
@@ -171,8 +167,36 @@ def accounts_page():
             f"{analytiq_score}",
         )
 
-        trades = st.dataframe(pd.DataFrame(get_trades(selected_account_id)), hide_index=True, use_container_width=True)
-        balances = st.dataframe(pd.DataFrame(get_balances(selected_account_id)), hide_index=True, use_container_width=True)
+        tab1, tab2 = st.tabs(["Deal History", "Settings"])
+
+        with tab1:
+            st.dataframe(pd.DataFrame(get_trades(selected_account_id)), hide_index=True, use_container_width=True)
+            st.dataframe(pd.DataFrame(get_balances(selected_account_id)), hide_index=True, use_container_width=True)
+
+        with tab2:
+            delete_account_button = st.button("Delete Account")
+
+            if delete_account_button:
+                with st.spinner("Deleting account..."):
+                    try:
+                        # Ensure there is an event loop in the current thread
+                        try:
+                            loop = asyncio.get_event_loop()
+                        except RuntimeError:
+                            # No event loop in the current thread; create a new one
+                            loop = asyncio.new_event_loop()
+                            asyncio.set_event_loop(loop)
+                        
+                        # Run the async function in the current thread's event loop
+                        loop.run_until_complete(undeploy_account(
+                            account_id=selected_account_id
+                        ))
+                        st.success("Account successfully deleted!")
+                        time.sleep(2)
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Failed to delete account: {e}")
 
 if __name__ == "__main__":
     accounts_page()
+ 

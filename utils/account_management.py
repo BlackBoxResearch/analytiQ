@@ -117,7 +117,12 @@ async def deploy_account(user_id, name, login, password, server_name, platform):
         print('Waiting for SDK to synchronize to terminal state (may take some time depending on your history size)...')
         await connection.wait_synchronized(600)
 
+        # Update the account's active status in the database
+        update_query = "UPDATE accounts SET active = TRUE WHERE account_id = %s"
+        execute_query(update_query, (account.id,), fetch_results=False)
+
         print("Reconnected to account successfully.")
+
     else:
         # Create a new account if it doesn't exist
         print("Creating a new account...")
@@ -173,12 +178,13 @@ async def deploy_account(user_id, name, login, password, server_name, platform):
 async def undeploy_account(account_id):
     """
     Undeploys an account, making it dormant but available for redeployment.
+    Updates the account's active status to FALSE in the database.
 
     Args:
         account_id (str): The unique ID of the account to be undeployed.
 
     Returns:
-        bool: True if the account was successfully undeployed, False otherwise.
+        bool: True if the account was successfully undeployed and database updated, False otherwise.
     """
     api = MetaApi(TOKEN)
 
@@ -193,9 +199,14 @@ async def undeploy_account(account_id):
         print(f"Undeploying account with ID: {account_id}...")
         await account.undeploy()
 
-        print(f"Account with ID {account_id} has been undeployed and is now dormant.")
+        # Update the account's active status in the database
+        update_query = "UPDATE accounts SET active = FALSE WHERE account_id = %s"
+        execute_query(update_query, (account_id,), fetch_results=False)
+
+        print(f"Account with ID {account_id} has been undeployed and marked as inactive.")
         return True
 
     except Exception as e:
         print(f"An error occurred while undeploying the account: {e}")
         return False
+
