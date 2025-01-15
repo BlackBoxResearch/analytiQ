@@ -32,6 +32,8 @@ def login_page():
     @st.dialog("Forgot Password")
     def forgot_password():
         recovery_email = st.text_input("Email")
+        if st.button("Submit", key="forgot_password_submit"):
+            st.info("Recovery email sent!")
 
 
     with st.container(border=False):
