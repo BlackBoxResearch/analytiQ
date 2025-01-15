@@ -32,8 +32,8 @@ def forgot_password_dialog():
     with st.form("forgot_password_form", border=False):
         recovery_email = st.text_input("Email")
 
-        if st.form_submit_button("Submit", key="forgot_password_submit"):
-            st.info("Recovery email sent!")
+        if st.form_submit_button("Submit", use_container_width=True):
+            st.info(f"Recovery email sent to {recovery_email}!")
 
 @st.dialog("Sign Up")
 def sign_up_dialog():
@@ -83,14 +83,7 @@ def login_page():
                 email_input = st.text_input("Email")
                 password_input = st.text_input("Password", type="password")
 
-                forgot_password_button = st.button("forgot_password", use_container_width=True)
-
-                if forgot_password_button:
-                    forgot_password_dialog()
-
-                col11, col22 = st.columns(2, vertical_alignment="top")
-
-                if col11.button("**Forgot Password?**", type="tertiary"):
+                if st.button("**Forgot Password?**", type="tertiary"):
                     forgot_password_dialog()
 
                 login_button = st.button(key="login_button", label="Log In", use_container_width=True, type='secondary', icon=":material/login:")
