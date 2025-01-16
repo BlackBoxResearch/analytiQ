@@ -7,15 +7,6 @@ from utils.account_management import deploy_account, undeploy_account
 from utils.database_management import execute_query
 from static.elements import tile, metric_tile
 
-@st.dialog("Pricing", width="large")
-def pricing_table():
-    st.components.v1.html(
-        html='''<script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-        <stripe-pricing-table pricing-table-id="prctbl_1QhhzHDjNID2hO5KdY8PhrUJ"
-        publishable-key="pk_test_51QK6BRDjNID2hO5KX6S5w4J0oO3PFEL6TRZ9fkJzXdGPlgTwWk56DoDX6RZvVL8eWy2EMEugQ2ojG3AsQBST6IHH00T2LJFAU3">
-        </stripe-pricing-table>
-        ''', height=500, scrolling=True)
-
 def summary_tiles(height, gain_value, win_rate_value, profit_factor_value, analytiq_score_value):
     summary_tile_1, summary_tile_2, summary_tile_3, summary_tile_4 = st.columns(4, vertical_alignment="bottom")
 
@@ -179,10 +170,6 @@ def accounts_page():
         tab1, tab2 = st.tabs(["Deal History", "Settings"])
 
         with tab1:
-            open_pricing = st.button("Open Pricing")
-            if open_pricing:
-                pricing_table()
-
             st.dataframe(pd.DataFrame(get_trades(selected_account_id)), hide_index=True, use_container_width=True)
             st.dataframe(pd.DataFrame(get_balances(selected_account_id)), hide_index=True, use_container_width=True)
 
