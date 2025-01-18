@@ -5,8 +5,8 @@ primary_background = '#111111'
 secondary_background = '#171717'
 dark_text_color = '#171717'
 light_text_color = '#E8E8E8'
-color_1 = '#fc4778'
-color_2 = '#3952f5'
+color_1 = '#fc4778' #Pink
+color_2 = '#3952f5' #Purple
 border_color = '#3c3c3c'
 caption_color = '#878884'
 
