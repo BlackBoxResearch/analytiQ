@@ -103,7 +103,7 @@ def login_page():
                         st.session_state["last_name"] = last_name
                         st.session_state["email"] = email
 
-                        st.info(f"Logged in successfully as **{first_name}**!")
+                        st.info(f"Logged in successfully!")
                         st.session_state["current_page"] = "Dashboard"
                         time.sleep(2)
                         st.rerun()

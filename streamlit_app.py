@@ -18,7 +18,6 @@ dashboard_page = st.Page(page=dashboard.dashboard_page, title="Dashboard", icon=
 support_page = st.Page(page=support.support_page, title="Support", icon=":material/support_agent:")
 settings_page = st.Page(page=settings.settings_page, title="Settings", icon=":material/settings:")
 logout_page = st.Page(page=logout.logout_page, title="Logout", icon=":material/logout:")
-accounts_page = st.Page(page=accounts.accounts_page, title="Accounts", icon=":material/group:")
 leaderboard_page = st.Page(page=leaderboard.leaderboard_page, title="Leaderboard", icon=":material/social_leaderboard:")
 pricing_page = st.Page(page=pricing.pricing_page, title="Pricing", icon=":material/paid:")
 
@@ -27,7 +26,7 @@ logged_out_pages = [login_page]
 
 # Group pages for logged-in users
 logged_in_pages = {
-    "Home": [dashboard_page, accounts_page, leaderboard_page, pricing_page],
+    "Home": [dashboard_page, leaderboard_page, pricing_page],
     "Settings": [settings_page, logout_page]  # Logout page added here
 }
 
