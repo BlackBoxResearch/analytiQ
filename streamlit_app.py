@@ -1,7 +1,7 @@
 import streamlit as st
 from st_social_media_links import SocialMediaIcons
 from streamlit_extras.bottom_container import bottom
-from pages import accounts, dashboard, leaderboard, login, logout, settings, support, pricing
+from pages import dashboard, leaderboard, login, logout, settings, support, pricing
 
 st.set_page_config(
     layout="centered",

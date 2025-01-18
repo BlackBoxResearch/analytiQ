@@ -19,7 +19,7 @@ def logout_dialog():
             switch_page("Dashboard")
             st.rerun()
 
-def LogoutPage():
+def logout_page():
     # Ensure session state variables are set
     if 'logged_out' not in st.session_state:
         st.session_state.logged_out = False
@@ -32,4 +32,4 @@ def LogoutPage():
         logout_dialog()
 
 if __name__ == "__main__":
-    LogoutPage()
+    logout_page()
