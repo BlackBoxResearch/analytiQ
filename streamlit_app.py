@@ -47,7 +47,7 @@ def main():
 
     # Display pages based on login state
     if st.session_state["logged_in"]:
-        st.logo(image="static/analytiq_type_logo.png", size="large", icon_image="static/analytiq_icon.png")
+        st.logo(image="static/analytiq_type_logo_dark.png", size="large", icon_image="static/analytiq_icon.png")
 
         create_navigation(logged_in_pages)
     else:

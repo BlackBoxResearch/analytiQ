@@ -69,7 +69,7 @@ def login_page():
         col1, col2, col3 = st.columns([1,3,1], vertical_alignment="top")
         
         with col2:
-            st.image(image="static/analytiq_type_logo.png", use_container_width=True)
+            st.image(image="static/analytiq_type_logo_dark.png", use_container_width=True)
 
             st.markdown("")
 
