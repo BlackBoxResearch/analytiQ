@@ -5,9 +5,10 @@ import asyncio
 import pandas as pd
 from utils.account_management import deploy_account, undeploy_account
 from utils.database_management import execute_query
-from static.elements import tile, metric_tile, gradient_metric_tile, animated_container
+from static.elements import tile, metric_tile, gradient_tile
 
 def summary_tiles(height, gain_value, win_rate_value, profit_factor_value, analytiq_score_value):
+    
     summary_tile_1, summary_tile_2, summary_tile_3, summary_tile_4 = st.columns(4, vertical_alignment="bottom")
 
     with summary_tile_1:
@@ -38,16 +39,15 @@ def summary_tiles(height, gain_value, win_rate_value, profit_factor_value, analy
                     )
     
     with summary_tile_4:
-        animated_container(
+        gradient_tile(
             key="summary_tile_4", 
             content=f"""
                 <div style="line-height: 1.5;">
                     <p style="margin: 0; font-size: 0.9em; color: #878884;">AnalytiQ Score</p>
-                    <p style="margin: 0; font-size: 1.4em; font-weight: bold; color: #E8E8E8;">75</p>
+                    <p style="margin: 0; font-size: 1.4em; font-weight: bold; color: #E8E8E8;">{analytiq_score_value}</p>
                 </div>
                 """
-        )
-
+            )
     
 def get_trades(account_id):
     """
@@ -84,7 +84,7 @@ def get_balances(account_id):
 def dashboard_page():
     user_id = st.session_state["user_id"]
     first_name = st.session_state["first_name"]
-    last_name = st.session_state["last_name"]
+    
     st.subheader(f'Welcome {first_name}', anchor=False)
 
     
