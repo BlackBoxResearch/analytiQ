@@ -5,7 +5,7 @@ from pages import dashboard, leaderboard, login, logout, settings, support, pric
 
 st.set_page_config(
     layout="centered",
-    initial_sidebar_state="collapsed",
+    initial_sidebar_state="auto",
     menu_items={
         'Get Help': 'https://www.extremelycoolapp.com/help',
         'Report a bug': "https://www.extremelycoolapp.com/bug",
