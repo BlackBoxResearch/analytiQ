@@ -102,8 +102,7 @@ def dashboard_page():
         account_options = ["No accounts available"]
         select_disabled = True
 
-    select_account_column, add_account_column = st.columns(2, vertical_alignment="bottom")
-
+    select_account_column, add_account_column, delete_account_column = st.columns([2,1,1], vertical_alignment="bottom")
     account_selection = select_account_column.selectbox("Select Account", account_options, disabled=select_disabled)
 
     with add_account_column.popover("Add Account", icon=":material/add_circle:", use_container_width=True):
@@ -150,6 +149,9 @@ def dashboard_page():
                 except Exception as e:
                     st.error(f"Failed to add account: {e}")
 
+    with delete_account_column:
+        st.button("Delete Account", type="primary", icon=":material/delete:")
+
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
 
@@ -166,10 +168,6 @@ def dashboard_page():
         )
 
         tab1, tab2 = st.tabs(["Deal History", "Settings"])
-
-        with tab1:
-            st.dataframe(pd.DataFrame(get_trades(selected_account_id)), hide_index=True, use_container_width=True)
-            st.dataframe(pd.DataFrame(get_balances(selected_account_id)), hide_index=True, use_container_width=True)
 
         with tab2:
             delete_account_button = st.button("Delete Account")
