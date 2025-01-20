@@ -150,7 +150,31 @@ def dashboard_page():
                     st.error(f"Failed to add account: {e}")
 
     with delete_account_column:
-        st.button("Delete Account", type="primary", icon=":material/delete:")
+        delete_account_button = st.button("Delete Account", icon=":material/delete:", use_container_width=True)
+
+        if delete_account_button:
+
+            @st.dialog("Delete Account")
+            def delete_account_dialog():
+                st.write("Are you sure you want delete this account?")
+                col1, col2 = st.columns(2)
+                with col1:
+                    if st.button("Yes", type="secondary", use_container_width=True):
+                        with st.spinner("Deleting account..."):
+                            try:
+                                run_async_function(undeploy_account, account_id=selected_account_id)
+                                st.success("Account successfully deleted!")
+                                time.sleep(2)
+                                st.rerun()
+                            except Exception as e:
+                                st.error(f"Failed to delete account: {e}")
+                        st.rerun()
+                with col2:
+                    if st.button("No", type="primary", use_container_width=True):
+                        st.rerun()
+            
+            delete_account_dialog()
+
 
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
@@ -168,19 +192,7 @@ def dashboard_page():
         )
 
         tab1, tab2 = st.tabs(["Deal History", "Settings"])
-
-        with tab2:
-            delete_account_button = st.button("Delete Account")
-
-            if delete_account_button:
-                with st.spinner("Deleting account..."):
-                    try:
-                        run_async_function(undeploy_account, account_id=selected_account_id)
-                        st.success("Account successfully deleted!")
-                        time.sleep(2)
-                        st.rerun()
-                    except Exception as e:
-                        st.error(f"Failed to delete account: {e}")
+           
 
 if __name__ == "__main__":
     dashboard_page()
