@@ -66,12 +66,14 @@ def main():
     ]
 
     with st.sidebar:
-        st.caption('''
-                    **Disclaimer:**
-                    The information provided by AnalytiQ is for informational purposes only and is not intended as financial advice, investment advice, or any other form of professional advice. While the platform offers analytical tools, insights, and performance data based on user inputs and trading activities, the content should not be considered a recommendation to buy, sell, or hold any financial instrument. Users are encouraged to perform their own research and consult with a qualified financial advisor before making any investment decisions. By using this software, you acknowledge and agree that AnalytiQ and its creators are not responsible for any financial losses or outcomes resulting from the use of the platform.
-                   ''')
         social_media_icons = SocialMediaIcons(social_media_links, colors=["#ffffff", "#ffffff"])
         social_media_icons.render()
+        st.caption('''
+                    **Disclaimer:**
+                    AnalytiQ provides tools and insights for informational purposes only and does not offer financial or investment advice. 
+                    Users should conduct their own research and consult a qualified financial advisor before making any investment decisions. 
+                    AnalytiQ and its creators are not responsible for any financial losses resulting from the use of the platform.
+                   ''')
 
 # Run the main function when the script is executed
 if __name__ == "__main__":
