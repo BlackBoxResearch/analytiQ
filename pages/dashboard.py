@@ -150,7 +150,13 @@ def dashboard_page():
                     st.error(f"Failed to add account: {e}")
 
     with delete_account_column:
-        delete_account_button = st.button("Delete Account", icon=":material/delete:", use_container_width=True)
+
+        if account_selection != "No accounts available":
+            disabled = True
+        else
+            disabled = False
+
+        delete_account_button = st.button("Delete Account", icon=":material/delete:", use_container_width=True, disabled=disabled)
 
         if delete_account_button:
 
