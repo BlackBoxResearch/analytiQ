@@ -6,5 +6,4 @@ nest_asyncio
 datetime
 st_social_media_links
 streamlit_extras
-aioredis
 redis
