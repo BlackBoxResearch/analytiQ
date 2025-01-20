@@ -152,9 +152,9 @@ def dashboard_page():
     with delete_account_column:
 
         if account_selection != "No accounts available":
-            disabled = True
-        else:
             disabled = False
+        else:
+            disabled = True
 
         delete_account_button = st.button("Delete Account", icon=":material/delete:", use_container_width=True, disabled=disabled)
 
