@@ -6,4 +6,4 @@ nest_asyncio
 datetime
 st_social_media_links
 streamlit_extras
-redis
+redis>=4.0.0
