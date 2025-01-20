@@ -38,13 +38,19 @@ def create_navigation(pages):
     selected_page.run()
 
 def main():
-    # Check if user is already logged in
+    # Initialize session state keys with default values
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = False
-
-    # Check if user has logged out and reset if necessary
     if "logged_out" not in st.session_state:
         st.session_state["logged_out"] = False
+    if "user_id" not in st.session_state:
+        st.session_state["user_id"] = None  # Default to None or another appropriate default value
+    if "first_name" not in st.session_state:
+        st.session_state["first_name"] = None
+    if "last_name" not in st.session_state:
+        st.session_state["last_name"] = None
+    if "email" not in st.session_state:
+        st.session_state["email"] = None
 
     # Display pages based on login state
     if st.session_state["logged_in"]:
