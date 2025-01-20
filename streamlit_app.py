@@ -60,14 +60,13 @@ def main():
     else:
         create_navigation(logged_out_pages)
 
-    with bottom():
-        social_media_links = [
-            "https://x.com/AnalytIQtrade",
-            "https://www.instagram.com/analytiq.trade"
-        ]
+    social_media_links = [
+        "https://x.com/AnalytIQtrade",
+        "https://www.instagram.com/analytiq.trade"
+    ]
 
+    with st.sidebar():
         social_media_icons = SocialMediaIcons(social_media_links, colors=["#ffffff", "#ffffff"])
-
         social_media_icons.render()
 
 # Run the main function when the script is executed
