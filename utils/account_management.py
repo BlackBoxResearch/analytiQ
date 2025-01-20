@@ -3,9 +3,32 @@ from utils.database_management import execute_query
 from metaapi_cloud_sdk import MetaApi
 import streamlit as st
 from datetime import datetime, timezone
-
+import nest_asyncio
+import asyncio
 
 TOKEN = st.secrets['META_API_TOKEN']
+
+def run_async_function(async_func, *args, **kwargs):
+    """
+    Runs an asynchronous function within a properly managed event loop.
+
+    Parameters:
+        async_func (Callable): The asynchronous function to run.
+        *args: Positional arguments to pass to the async function.
+        **kwargs: Keyword arguments to pass to the async function.
+
+    Returns:
+        The result of the asynchronous function.
+    """
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        # Create a new event loop if there is none
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    # Run the async function in the current thread's event loop
+    return loop.run_until_complete(async_func(*args, **kwargs))
 
 def save_account(user_id, account_id, account_info, account_name):
     """
@@ -82,6 +105,13 @@ def save_balance_operations(account_id, balance_operations):
             operation['comment']
         )
         execute_query(query, params, fetch_results=False)
+
+async def test_deployed_account_list():
+    api = MetaApi(TOKEN)
+
+    # Check if account exists on MetaApi
+    accounts = await api.metatrader_account_api.get_accounts_with_infinite_scroll_pagination()
+    print(accounts)
 
 async def deploy_account(user_id, name, login, password, server_name, platform):
     """

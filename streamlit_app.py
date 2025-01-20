@@ -26,7 +26,8 @@ logged_out_pages = [login_page]
 
 # Group pages for logged-in users
 logged_in_pages = {
-    "Home": [dashboard_page, leaderboard_page, pricing_page],
+    "Home": [dashboard_page, pricing_page],
+    "Community": [leaderboard_page],
     "Settings": [settings_page, logout_page]  # Logout page added here
 }
 

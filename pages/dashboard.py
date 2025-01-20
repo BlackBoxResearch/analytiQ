@@ -3,7 +3,7 @@ import time
 import nest_asyncio
 import asyncio
 import pandas as pd
-from utils.account_management import deploy_account, undeploy_account
+from utils.account_management import deploy_account, undeploy_account, run_async_function
 from utils.database_management import execute_query
 from static.elements import tile, metric_tile, gradient_tile
 
@@ -135,23 +135,15 @@ def dashboard_page():
                 time.sleep(3)
             with st.spinner("Fetching trade history..."):
                 try:
-                    # Ensure there is an event loop in the current thread
-                    try:
-                        loop = asyncio.get_event_loop()
-                    except RuntimeError:
-                        # No event loop in the current thread; create a new one
-                        loop = asyncio.new_event_loop()
-                        asyncio.set_event_loop(loop)
-                    
-                    # Run the async function in the current thread's event loop
-                    loop.run_until_complete(deploy_account(
+                    run_async_function(
+                        deploy_account,
                         user_id=user_id,
                         name=account_name,
                         login=login,
                         password=password,
                         server_name=server,
                         platform=platform,
-                    ))
+                    )
                     st.success("Account successfully added!")
                     time.sleep(2)
                     st.rerun()
@@ -185,18 +177,7 @@ def dashboard_page():
             if delete_account_button:
                 with st.spinner("Deleting account..."):
                     try:
-                        # Ensure there is an event loop in the current thread
-                        try:
-                            loop = asyncio.get_event_loop()
-                        except RuntimeError:
-                            # No event loop in the current thread; create a new one
-                            loop = asyncio.new_event_loop()
-                            asyncio.set_event_loop(loop)
-                        
-                        # Run the async function in the current thread's event loop
-                        loop.run_until_complete(undeploy_account(
-                            account_id=selected_account_id
-                        ))
+                        run_async_function(undeploy_account, account_id=selected_account_id)
                         st.success("Account successfully deleted!")
                         time.sleep(2)
                         st.rerun()
