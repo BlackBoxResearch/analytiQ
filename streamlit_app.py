@@ -68,12 +68,6 @@ def main():
     with st.sidebar:
         social_media_icons = SocialMediaIcons(social_media_links, colors=["#ffffff", "#ffffff"])
         social_media_icons.render()
-        st.caption('''
-                    **Disclaimer:**
-                    AnalytiQ provides tools and insights for informational purposes only and does not offer financial or investment advice. 
-                    Users should conduct their own research and consult a qualified financial advisor before making any investment decisions. 
-                    AnalytiQ and its creators are not responsible for any financial losses resulting from the use of the platform.
-                   ''')
 
 # Run the main function when the script is executed
 if __name__ == "__main__":
