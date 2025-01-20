@@ -65,7 +65,7 @@ def main():
         "https://www.instagram.com/analytiq.trade"
     ]
 
-    with st.sidebar():
+    with st.sidebar:
         social_media_icons = SocialMediaIcons(social_media_links, colors=["#ffffff", "#ffffff"])
         social_media_icons.render()
 
