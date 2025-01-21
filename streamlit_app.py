@@ -17,6 +17,7 @@ st.markdown(
     <style>
         /* Hide the Streamlit header */
         header {visibility: hidden;}
+        footer {visibility: hidden;}
     </style>
     """,
     unsafe_allow_html=True
