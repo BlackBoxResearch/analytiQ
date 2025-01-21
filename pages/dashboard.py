@@ -84,8 +84,8 @@ def dashboard_page():
     first_name = st.session_state["first_name"]
     
     st.subheader(f'Welcome, {first_name}!', anchor=False)
-    st.info("This is your **Dashboard** where you can connect your trading accounts, and analyse your performance. With an extensive array of metrics, the AnalytiQ dashboard is designed to help you identify strengths and weaknesses in your strategy.")
-
+    st.info("This is your **Dashboard** where you can connect your trading accounts, and analyse your performance.")
+    
     # Execute the query to fetch user accounts
     query = "SELECT account_id, name, login FROM accounts WHERE user_id = %s AND active = TRUE"
     user_accounts = execute_query(query, (user_id,))
