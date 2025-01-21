@@ -105,7 +105,7 @@ def login_page():
 
                         st.info(f"Logged in successfully!")
                         st.session_state["current_page"] = "Dashboard"
-                        time.sleep(2)
+                        time.sleep(1)
                         st.rerun()
                     else:
                         st.error("Incorrect email or password. Please try again.")  

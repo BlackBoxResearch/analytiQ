@@ -7,3 +7,5 @@ datetime
 st_social_media_links
 streamlit_extras
 redis>=4.0.0
+altair
+pandas
