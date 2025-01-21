@@ -107,7 +107,7 @@ def gradient_tile(key: str, content: str):
                 unsafe_allow_html=True
             )
 
-def line_chart(data, x, y, x_label, y_label, height=280, show_labels=True):
+def line_chart(data, x, y, x_label, y_label, height=280, show_labels=True, line_color='#E8E8E8', fill_color='#E8E8E8'):
     """
     Generate a line chart with a gradient fill.
     
@@ -119,6 +119,7 @@ def line_chart(data, x, y, x_label, y_label, height=280, show_labels=True):
         y_label (str): The label for the y-axis.
         height (int): The height of the chart. Default is 280.
         show_labels (bool): Show labels or not.
+        line_color (str): Chart line color.
     
     Returns:
         alt.Chart: The Altair chart object.
@@ -127,32 +128,32 @@ def line_chart(data, x, y, x_label, y_label, height=280, show_labels=True):
     data[x] = pd.to_datetime(data[x])
     
     # Configure axis labels based on show_labels parameter
-    x_axis = alt.X(f'{x}:T', title=x_label if show_labels else None)
-    y_axis = alt.Y(f'{y}:Q', title=y_label if show_labels else None)
+    x_axis = alt.X(f'{x}:T', title=x_label if show_labels else None, axis=alt.Axis(format='%b'))
+    y_axis = alt.Y(f'{y}:Q', title=y_label if show_labels else None, axis=alt.Axis(format=".0%"))
 
     # Create the main line chart with a gradient fill
     chart = alt.Chart(data).mark_area(
-        line={'color': '#E8E8E8'},  # Line color
+        line={'color': line_color},  # Line color
         color=alt.Gradient(  # Gradient fill with specified opacity
             gradient='linear',
             stops=[
-                alt.GradientStop(color='rgba(232, 232, 232, 0.5)', offset=0),
-                alt.GradientStop(color='rgba(232, 232, 232, 0)', offset=1)
+                alt.GradientStop(color=fill_color + "7F", offset=0),  # 50% transparency
+                alt.GradientStop(color=fill_color + "00", offset=1)     
             ],
             x1=1, x2=1, y1=1, y2=0
         ),
         interpolate='monotone'  # Smooth the line
-
-
     ).encode(
         x=x_axis,  # Configure x-axis
         y=y_axis   # Configure y-axis
     ).properties(
         height=height,  # Set the height of the chart
         background=secondary_background,  # Background color
-        padding={"top": 10, "bottom": 10, "left": 10, "right": 10}
+        padding={"top": 10, "bottom": 10, "left": 10, "right": 10},
     ).configure_axis(
-        grid=False  # Remove grid lines
+        grid=False,  # Remove grid lines
+        labelFontSize=14,
+        labelColor=caption_color,
     ).configure_view(
         strokeWidth=0  # Remove borders around the chart
     )

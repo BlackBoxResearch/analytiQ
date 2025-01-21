@@ -210,12 +210,17 @@ def dashboard_page():
         })
 
         with tile("performance_overview_chart", 300, border=True):
+            st.markdown("**Performance**")
             line_chart(
                 data=data,
                 x="Date",
                 y="Portfolio Returns",
                 x_label="Date",
-                y_label="Cumulative Returns"
+                y_label="Cumulative Returns",
+                height=250,
+                show_labels=False,
+                line_color='#3952f5',
+                fill_color='#3952f5',
             )
 
 
