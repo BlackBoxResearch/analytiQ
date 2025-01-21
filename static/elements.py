@@ -1,6 +1,7 @@
 import streamlit as st
 import altair as alt
 from streamlit_extras.stylable_container import stylable_container
+import pandas as pd
 
 primary_background = '#111111'
 secondary_background = '#171717'
