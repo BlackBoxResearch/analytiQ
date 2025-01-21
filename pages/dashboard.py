@@ -115,7 +115,7 @@ def dashboard_page():
         else:
             active_account_count = 0  # Fallback if no result found
 
-        if active_account_count >= 1:
+        if active_account_count >= 3:
             add_account_disabled = True
         else:
             add_account_disabled = False
@@ -166,16 +166,17 @@ def dashboard_page():
                 st.write("Are you sure you want delete this account?")
                 col1, col2 = st.columns(2)
                 with col1:
-                    if st.button("Yes", type="secondary", use_container_width=True):
-                        with st.spinner("Deleting account..."):
-                            try:
-                                run_async_function(undeploy_account, account_id=selected_account_id)
-                                st.success("Account successfully deleted!")
-                                time.sleep(2)
-                                st.rerun()
-                            except Exception as e:
-                                st.error(f"Failed to delete account: {e}")
-                        st.rerun()
+                    proceed_button = st.button("Yes", type="secondary", use_container_width=True)
+                with proceed_button:
+                    with st.spinner("Deleting account..."):
+                        try:
+                            run_async_function(undeploy_account, account_id=selected_account_id)
+                            st.success("Account successfully deleted!")
+                            time.sleep(2)
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Failed to delete account: {e}")
+                    st.rerun()
                 with col2:
                     if st.button("No", type="primary", use_container_width=True):
                         st.rerun()
