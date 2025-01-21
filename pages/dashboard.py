@@ -14,7 +14,7 @@ def summary_tiles(height, stat_1, stat_2, stat_3, stat_4):
                     stat="Gain", 
                     value=stat_1, 
                     height=height, 
-                    border=True, 
+                    border=False, 
                     tooltip=None
                     )
     
@@ -23,7 +23,7 @@ def summary_tiles(height, stat_1, stat_2, stat_3, stat_4):
                     stat="Win Rate", 
                     value=stat_2, 
                     height=height, 
-                    border=True, 
+                    border=False, 
                     tooltip=None
                     )
     
@@ -32,7 +32,7 @@ def summary_tiles(height, stat_1, stat_2, stat_3, stat_4):
                     stat="Profit Factor", 
                     value=stat_3, 
                     height=height, 
-                    border=True, 
+                    border=False, 
                     tooltip=None
                     )
     
@@ -83,7 +83,8 @@ def dashboard_page():
     user_id = st.session_state["user_id"]
     first_name = st.session_state["first_name"]
     
-    st.subheader(f'Welcome {first_name}', anchor=False)
+    st.subheader(f'Welcome, {first_name}!', anchor=False)
+    st.info("This is your **Dashboard** where you can connect your trading accounts, and analyse your performance. With an extensive array of metrics, the AnalytiQ dashboard is designed to help you identify strengths and weaknesses in your strategy.")
 
     # Execute the query to fetch user accounts
     query = "SELECT account_id, name, login FROM accounts WHERE user_id = %s AND active = TRUE"
@@ -209,7 +210,7 @@ def dashboard_page():
             ]
         })
 
-        with tile("performance_overview_chart", 300, border=True):
+        with tile("performance_overview_chart", 300, border=False):
             st.markdown("**Performance**")
             line_chart(
                 data=data,
@@ -221,17 +222,7 @@ def dashboard_page():
                 show_labels=False,
                 line_color='#3952f5',
                 fill_color='#3952f5',
-            )
-
-
-
-
-
-
-
-
-        tab1, tab2 = st.tabs(["Deal History", "Settings"])
-           
+            )         
 
 if __name__ == "__main__":
     dashboard_page()

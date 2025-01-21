@@ -1,7 +1,7 @@
 import streamlit as st
 from st_social_media_links import SocialMediaIcons
 from streamlit_extras.bottom_container import bottom
-from pages import dashboard, leaderboard, login, logout, settings, support, pricing
+from pages import dashboard, leaderboard, login, logout, settings, support, pricing, lab, insights
 
 st.set_page_config(
     layout="centered",
@@ -20,15 +20,17 @@ settings_page = st.Page(page=settings.settings_page, title="Settings", icon=":ma
 logout_page = st.Page(page=logout.logout_page, title="Logout", icon=":material/logout:")
 leaderboard_page = st.Page(page=leaderboard.leaderboard_page, title="Leaderboard", icon=":material/social_leaderboard:")
 pricing_page = st.Page(page=pricing.pricing_page, title="Pricing", icon=":material/paid:")
+lab_page = st.Page(page=lab.lab_page, title="Strategy Lab", icon=":material/experiment:")
+insights_page = st.Page(page=insights.insights_page, title="Insights", icon=":material/search_insights:")
 
 # Group pages for logged-out users
 logged_out_pages = [login_page]
 
 # Group pages for logged-in users
 logged_in_pages = {
-    "Home": [dashboard_page, pricing_page],
-    "Community": [leaderboard_page],
-    "Settings": [settings_page, logout_page]  # Logout page added here
+    "Trading": [dashboard_page, lab_page],
+    "Community": [leaderboard_page, insights_page],
+    "Settings": [pricing_page, settings_page, logout_page]  # Logout page added here
 }
 
 def create_navigation(pages):
@@ -67,10 +69,6 @@ def main():
             social_media_icons.render()
     else:
         create_navigation(logged_out_pages)
-
-
-
-
 
 # Run the main function when the script is executed
 if __name__ == "__main__":
