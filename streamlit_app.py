@@ -12,16 +12,15 @@ st.set_page_config(
         'About': "# This is a header. This is an *extremely* cool app!"
     })
 
-st.markdown(
-    """
-    <style>
-        /* Hide the Streamlit header */
-        header {visibility: hidden;}
-        manage-app-button {visibility: hidden;}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# st.markdown(
+#     """
+#     <style>
+#         /* Hide the Streamlit header */
+#         header {visibility: hidden;}
+#     </style>
+#     """,
+#     unsafe_allow_html=True
+# )
 
 # Define pages with icons
 login_page = st.Page(page=login.login_page, title="Login", icon=":material/login:")
