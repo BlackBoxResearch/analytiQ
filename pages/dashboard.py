@@ -209,13 +209,14 @@ def dashboard_page():
             ]
         })
 
-        line_chart(
-            data=data,
-            x="Date",
-            y="Portfolio Returns",
-            x_label="Date",
-            y_label="Cumulative Returns"
-        )
+        with tile("performance_overview_chart", 300, border=True):
+            line_chart(
+                data=data,
+                x="Date",
+                y="Portfolio Returns",
+                x_label="Date",
+                y_label="Cumulative Returns"
+            )
 
 
 
