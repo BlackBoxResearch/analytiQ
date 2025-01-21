@@ -106,21 +106,21 @@ def dashboard_page():
         account_selection = st.selectbox("Select Account", account_options, disabled=select_disabled)
 
     with add_account_column:
-        with st.popover("Add Account", icon=":material/add_circle:", use_container_width=True):
-            # Check the number of active accounts for the current user
-            query = "SELECT COUNT(*) AS active_account_count FROM accounts WHERE user_id = %s AND active = TRUE"
-            result = execute_query(query, (user_id,))
-            
-            if result:
-                active_account_count = result[0]["active_account_count"]
-            else:
-                st.error("Could not retrieve account information. Please try again later.")
-                return
+        # Check the number of active accounts for the current user
+        query = "SELECT COUNT(*) AS active_account_count FROM accounts WHERE user_id = %s AND active = TRUE"
+        result = execute_query(query, (user_id,))
 
-            if active_account_count >= 3:
-                st.warning("You have reached the maximum limit of 3 connected accounts.")
-                return
+        if result and len(result) > 0:
+            active_account_count = result[0]["active_account_count"]
+        else:
+            active_account_count = 0  # Fallback if no result found
 
+        if active_account_count >= 1:
+            add_account_disabled = True
+        else:
+            add_account_disabled = False
+
+        with st.popover("Add Account", icon=":material/add_circle:", use_container_width=True, disabled=add_account_disabled):
             # User input for adding a new account
             account_name = st.text_input("Account Name", placeholder="e.g., Main Account")
             login = st.text_input("Account Number", placeholder="Account Number")
