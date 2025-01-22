@@ -4,6 +4,7 @@ import pandas as pd
 from utils.account_management import deploy_account, undeploy_account, run_async_function
 from utils.database_management import execute_query
 from static.elements import tile, metric_tile, gradient_tile, line_chart
+from streamlit_extras import stylable_container
 
 def summary_tiles(height, stat_1, stat_2, stat_3, stat_4):
     
@@ -120,7 +121,11 @@ def dashboard_page():
         else:
             add_account_disabled = False
 
-        with st.popover("Add Account", icon=":material/add_circle:", use_container_width=True, disabled=add_account_disabled):
+        with st.popover("Add Account", 
+                        icon=":material/add_circle:", 
+                        use_container_width=True, 
+                        disabled=add_account_disabled):
+            
             # User input for adding a new account
             account_name = st.text_input("Account Name", placeholder="e.g., Main Account")
             login = st.text_input("Account Number", placeholder="Account Number")
@@ -157,7 +162,27 @@ def dashboard_page():
         else:
             disabled = True
 
-        delete_account_button = st.button("Delete Account", icon=":material/delete:", use_container_width=True, disabled=disabled)
+        delete_account_button = st.button("Delete Account", 
+                                          icon=":material/delete:", 
+                                          use_container_width=True, 
+                                          disabled=disabled)
+
+        with stylable_container(
+            key="delete-account-button",
+            css_styles="""
+                button {
+                    background-color:##ff6666;
+                    color: white;
+                    border-radius: 5px;
+                }
+                """,
+            ):
+                st.button(label="Delete Account", 
+                          key="delete-account-button",
+                          icon=":material/delete:", 
+                          use_container_width=True, 
+                          disabled=disabled)
+
 
         if delete_account_button:
 
