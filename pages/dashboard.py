@@ -177,7 +177,7 @@ def dashboard_page():
                 }
                 """,
             ):
-                st.button(label="Delete Account", 
+                delete_account_button = st.button(label="Delete Account", 
                           key="delete-account-button",
                           icon=":material/delete:", 
                           use_container_width=True, 
