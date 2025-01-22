@@ -162,10 +162,10 @@ def dashboard_page():
         else:
             disabled = True
 
-        delete_account_button = st.button("Delete Account", 
-                                          icon=":material/delete:", 
-                                          use_container_width=True, 
-                                          disabled=disabled)
+        # delete_account_button = st.button("Delete Account", 
+        #                                   icon=":material/delete:", 
+        #                                   use_container_width=True, 
+        #                                   disabled=disabled)
 
         with stylable_container(
             key="delete-account-button",
