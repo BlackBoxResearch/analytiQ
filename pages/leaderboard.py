@@ -1,54 +1,7 @@
-import asyncio
 import streamlit as st
-from datetime import datetime, timedelta
+from datetime import datetime
 from static.elements import tile, gradient_tile
 
-def run_async_function(async_func, *args, **kwargs):
-    """
-    Runs an asynchronous function within a properly managed event loop.
-
-    Parameters:
-        async_func (Callable): The asynchronous function to run.
-        *args: Positional arguments to pass to the async function.
-        **kwargs: Keyword arguments to pass to the async function.
-
-    Returns:
-        The result of the asynchronous function.
-    """
-    try:
-        loop = asyncio.get_event_loop()
-    except RuntimeError:
-        # Create a new event loop if there is none
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-    # Run the async function in the current thread's event loop
-    return loop.run_until_complete(async_func(*args, **kwargs))
-
-async def countdown_between_dates(start_date: datetime, end_date: datetime):
-    """
-    Asynchronous countdown timer between two dates.
-
-    Parameters:
-        start_date (datetime): The start of the countdown.
-        end_date (datetime): The target end of the countdown.
-    """
-    while True:
-        now = datetime.now()
-        if now < start_date:
-            st.metric("Countdown", "Not started yet")
-        else:
-            remaining_time = end_date - now
-            if remaining_time.total_seconds() > 0:
-                days = remaining_time.days
-                hours, remainder = divmod(remaining_time.seconds, 3600)
-                minutes, _ = divmod(remainder, 60)
-                st.metric("Countdown", f"{days} Days, {hours:02d}:{minutes:02d}")
-            else:
-                st.metric("Countdown", "Time's up!")
-                break
-
-        await asyncio.sleep(1)
 
 def leaderboard_page():
     st.subheader("Leaderboard", anchor=False)
@@ -64,11 +17,35 @@ def leaderboard_page():
 
     with active_leaderboards_r:
         with tile("competition_countdown", 50, True):
-            # Define fixed start and end dates
-            start_datetime = datetime(2025, 1, 22, 0, 0)  # 22nd Jan 2025 at midnight
-            end_datetime = datetime(2025, 1, 29, 0, 0)  # 29th Jan 2025 at midnight
+            # Set the target date and time for the countdown
+            target_date = datetime(2025, 2, 14, 12, 0, 0)  # Valentine's Day at 12:00 PM
+            target_date_js = int(target_date.timestamp() * 1000)  # Convert to milliseconds for JavaScript
 
-            run_async_function(countdown_between_dates, start_datetime, end_datetime)
+            # HTML and JavaScript for real-time countdown
+            countdown_html = f"""
+            <div style="height: 50px; display: flex; align-items: center; justify-content: center; font-size: 20px; background-color: #f0f2f6; border-radius: 5px;">
+                <span id="countdown"></span>
+            </div>
+            <script>
+                const targetDate = new Date({target_date_js});
+                function updateCountdown() {{
+                    const now = new Date();
+                    const delta = targetDate - now;
+                    if (delta > 0) {{
+                        const days = Math.floor(delta / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        const minutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
+                        document.getElementById('countdown').textContent = `${{days}} Days, ${{hours}} Hours, ${{minutes}} Minutes`;
+                    }} else {{
+                        document.getElementById('countdown').textContent = "Countdown Complete!";
+                    }}
+                }}
+                setInterval(updateCountdown, 1000);
+                updateCountdown();  // Initial call
+            </script>
+            """
+
+            st.components.v1.html(countdown_html, height=40)
     
     prize_1, prize_2, prize_3 = st.columns(3, vertical_alignment="top")
 
