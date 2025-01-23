@@ -3,9 +3,9 @@ import altair as alt
 from streamlit_extras.stylable_container import stylable_container
 import pandas as pd
 
-primary_background = '#111111'
-secondary_background = '#171717'
-dark_text_color = '#171717'
+primary_background = '#201c1c' #'#111111'
+secondary_background = '#282424' #'#171717'
+dark_text_color = '#201c1c' #171717'
 light_text_color = '#E8E8E8'
 color_1 = '#fc4778' #Pink
 color_2 = '#3952f5' #Purple
