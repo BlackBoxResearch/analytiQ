@@ -197,6 +197,9 @@ def dashboard_page():
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
         st.divider()
+
+        st.subheader(f'{selected_account_id['name']}')
+
         summary_tiles(
             height=55, 
             stat_1=f"55%",
