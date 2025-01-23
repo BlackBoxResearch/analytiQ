@@ -197,18 +197,12 @@ def dashboard_page():
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
 
-        col1, col2 = st.columns([3,1], vertical_alignment="top")
-
-        gain = 55
-        win_rate = 64
-        profit_factor = 1.32
-        analytiq_score = 75
         summary_tiles(
             height=55, 
-            stat_1=f"{gain}%",
-            stat_2=f"{win_rate}%",
-            stat_3=f"{profit_factor}",
-            stat_4=f"{analytiq_score}",
+            stat_1=f"55%",
+            stat_2=f"64%",
+            stat_3=f"1.32",
+            stat_4=f"75",
         )
 
         data = pd.DataFrame({
@@ -223,6 +217,8 @@ def dashboard_page():
                 0.157245, 0.236674, 0.488432, 0.440673
             ]
         })
+
+        col1, col2 = st.columns([3,1], vertical_alignment="top")
 
         with col1:
             with tile("performance_overview_chart", 300, border=False):

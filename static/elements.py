@@ -167,7 +167,7 @@ def line_chart(data, x, y, x_label, y_label, height=280, show_labels=True, line_
 
     # Create the main line chart with a gradient fill
     chart = alt.Chart(data).mark_area(
-        line={'color': line_color},  # Line color
+        line={'color': line_color, 'strokeWidth': 1},  # Line color and width set to 1px
         color=alt.Gradient(  # Gradient fill with specified opacity
             gradient='linear',
             stops=[
