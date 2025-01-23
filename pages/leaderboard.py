@@ -12,7 +12,7 @@ def leaderboard_page():
     
     st.markdown("**Active Competitions**")
 
-    col1, col2, col3 = st.columns([3],vertical_alignment="top")
+    col1, col2, col3 = st.columns(3,vertical_alignment="top")
     with col1:
         with tile("competition_countdown", 40, True):
             # Set the target date and time for the countdown
