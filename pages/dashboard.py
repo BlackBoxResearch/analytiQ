@@ -199,7 +199,7 @@ def dashboard_page():
         account_details = next(account for account in user_accounts if account['account_id'] == selected_account_id)
 
         st.divider()
-        st.subheader(f"{account_details['name']}")
+        #st.subheader(f"{account_details['name']}")
 
         summary_tiles(
             height=55, 
