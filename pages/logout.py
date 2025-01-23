@@ -1,4 +1,5 @@
 import streamlit as st
+from static.elements import button
 from streamlit_extras.switch_page_button import switch_page
 
 # Function to create the logout dialog
@@ -15,7 +16,8 @@ def logout_dialog():
             st.session_state["logged_out"] = False
             st.rerun()
     with col2:
-        if st.button("No", type="primary", use_container_width=True):
+        if button("No", "cancel_delete", '#ca4747', None, False):
+        #if st.button("No", type="primary", use_container_width=True):
             switch_page("Dashboard")
             st.rerun()
 

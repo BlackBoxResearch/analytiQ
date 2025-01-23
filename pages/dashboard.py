@@ -5,6 +5,7 @@ from utils.account_management import deploy_account, undeploy_account, run_async
 from utils.database_management import execute_query
 from static.elements import tile, metric_tile, gradient_tile, line_chart, button
 from streamlit_extras import stylable_container
+from streamlit_extras.switch_page_button import switch_page
 
 def summary_tiles(height, stat_1, stat_2, stat_3, stat_4):
     
@@ -186,6 +187,7 @@ def dashboard_page():
 
                 with col2:
                     if button("No", "cancel_delete", '#ca4747', None, False):
+                        switch_page("Dashboard")
                         st.rerun()
             
                 if proceed_button:
