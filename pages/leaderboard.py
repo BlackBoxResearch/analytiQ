@@ -42,7 +42,7 @@ def leaderboard_page():
             </script>
             """
 
-            st.components.v1.html(countdown_html, height=40)
+            st.html(countdown_html)
     
     prize_1, prize_2, prize_3 = st.columns(3, vertical_alignment="top")
 
