@@ -36,35 +36,15 @@ def gradient_button(label, key, icon, disabled):
             button {{
                 background: linear-gradient(45deg, {color_1}, {color_2});
                 color: white;
-                border: none;
                 border-radius: 0.5rem;
-                padding: 0.5rem 1rem;
-                font-size: 1rem;
-                cursor: pointer;
-                background-clip: padding-box;
-                box-shadow: inset 0 0 0 2px transparent;
-                transition: box-shadow 0.2s ease-in-out;
             }}
-            button::before {{
-                content: '';
-                position: absolute;
-                top: -2px;
-                left: -2px;
-                right: -2px;
-                bottom: -2px;
-                z-index: -1;
-                background: linear-gradient(45deg, {color_1}, {color_2});
-                border-radius: inherit;
-            }}
-        '''
-    ):
-        return st.button(
-            label=label,
-            key=key,
-            icon=icon,
-            use_container_width=True,
-            disabled=disabled
-        )
+            ''',
+        ):
+            return st.button(label=label, 
+                        key=key,
+                        icon=icon, 
+                        use_container_width=True,
+                        disabled=disabled)
 
 def tile(key, height, border):
     border_style = f"1px solid {border_color};" if border else "none;"
