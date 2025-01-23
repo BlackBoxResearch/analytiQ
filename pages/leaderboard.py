@@ -20,9 +20,7 @@ def leaderboard_page():
             target_date_js = int(target_date.timestamp() * 1000)  # Convert to milliseconds for JavaScript
 
             countdown_html = f"""
-            <div style="height: 50px; display: flex; align-items: flex-start; justify-content: flex-start; font-size: 20px; font-family: 'Source Sans Pro', sans-serif; color: #E8E8E8; background-color: #171717; border-radius: 5px; padding: 5px;">
-                <span id="countdown"></span>
-            </div>
+            <span id="countdown" style="font-size: 20px; font-family: 'Source Sans Pro', sans-serif; color: #E8E8E8;"></span>
             <script>
                 const targetDate = new Date({target_date_js});
                 function updateCountdown() {{
