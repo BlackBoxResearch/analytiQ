@@ -16,11 +16,11 @@ def leaderboard_page():
     with col1:
         with tile("competition_countdown", 40, True):
             # Set the target date and time for the countdown
-            target_date = datetime(2025, 2, 14, 12, 0, 0)  # Valentine's Day at 12:00 PM
+            target_date = datetime(2025, 1, 24, 12, 0, 0)  # Valentine's Day at 12:00 PM
             target_date_js = int(target_date.timestamp() * 1000)  # Convert to milliseconds for JavaScript
 
             countdown_html = f"""
-            <div style="height: 50px; display: flex; align-items: flex-start; justify-content: flex-start; font-size: 20px; font-family: 'Source Sans Pro', sans-serif; color: #E8E8E8; background-color: #171717; border-radius: 5px; padding: 10px;">
+            <div style="height: 50px; display: flex; align-items: flex-start; justify-content: flex-start; font-size: 20px; font-family: 'Source Sans Pro', sans-serif; color: #E8E8E8; background-color: #171717; border-radius: 5px; padding: 5px;">
                 <span id="countdown"></span>
             </div>
             <script>
@@ -32,7 +32,9 @@ def leaderboard_page():
                         const days = Math.floor(delta / (1000 * 60 * 60 * 24));
                         const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         const minutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
-                        document.getElementById('countdown').textContent = `${{days}} D, ${{hours}} H, ${{minutes}} M`;
+                        const seconds = Math.floor((delta % (1000 * 60)) / 1000);
+            
+                        document.getElementById('countdown').textContent = `${{days}} Days, ${{hours}} Hours, ${{minutes}} Minutes, ${{seconds}} Seconds`;
                     }} else {{
                         document.getElementById('countdown').textContent = "Countdown Complete!";
                     }}
