@@ -12,6 +12,24 @@ color_2 = '#3952f5' #Purple
 border_color = '#3c3c3c'
 caption_color = '#878884'
 
+def button(label, key, color, icon, disabled):
+    with stylable_container(
+        key="key-account-button",
+        css_styles=f'''
+            button {{
+                background-color:{color};
+                color: white;
+                border-radius: 0.5rem;
+            }}
+            ''',
+        ):
+            return st.button(label=label, 
+                        key=key,
+                        icon=icon, 
+                        use_container_width=True,
+                        disabled=disabled)
+
+
 def tile(key, height, border):
     border_style = f"1px solid {border_color};" if border else "none;"
     

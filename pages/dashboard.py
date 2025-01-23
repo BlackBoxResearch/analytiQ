@@ -3,7 +3,7 @@ import time
 import pandas as pd
 from utils.account_management import deploy_account, undeploy_account, run_async_function
 from utils.database_management import execute_query
-from static.elements import tile, metric_tile, gradient_tile, line_chart
+from static.elements import tile, metric_tile, gradient_tile, line_chart, button
 from streamlit_extras import stylable_container
 
 def summary_tiles(height, stat_1, stat_2, stat_3, stat_4):
@@ -167,32 +167,28 @@ def dashboard_page():
         #                                   use_container_width=True, 
         #                                   disabled=disabled)
 
-        with stylable_container(
-            key="delete-account-button",
-            css_styles="""
-                button {
-                    background-color:##ff6666;
-                    color: white;
-                    border-radius: 5px;
-                }
-                """,
-            ):
-                delete_account_button = st.button(label="Delete Account", 
-                          key="delete-account-button",
-                          icon=":material/delete:", 
-                          use_container_width=True, 
-                          disabled=disabled)
-
-
+        delete_account_button = button(label="Delete Account",
+                                       key="delete-account-button",
+                                       color='#ca4747',
+                                       icon=":material/delete:",
+                                       disabled=disabled,
+                                       )
+        
         if delete_account_button:
 
             @st.dialog("Delete Account")
             def delete_account_dialog():
                 st.write("Are you sure you want delete this account?")
                 col1, col2 = st.columns(2)
+
                 with col1:
                     proceed_button = st.button("Yes", type="secondary", use_container_width=True)
-                with proceed_button:
+
+                with col2:
+                    if button("No", "cancel_delete", '#ca4747', None, False):
+                        st.rerun()
+            
+                if proceed_button:
                     with st.spinner("Deleting account..."):
                         try:
                             run_async_function(undeploy_account, account_id=selected_account_id)
@@ -202,10 +198,7 @@ def dashboard_page():
                         except Exception as e:
                             st.error(f"Failed to delete account: {e}")
                     st.rerun()
-                with col2:
-                    if st.button("No", type="primary", use_container_width=True):
-                        st.rerun()
-            
+                    
             delete_account_dialog()
 
     if account_selection != "No accounts available":
