@@ -182,6 +182,7 @@ def dashboard_page():
 
     with account_settings_column:
         if account_selection != "No accounts available":
+            selected_account_id = account_map[account_selection]
             disabled = False
         else:
             disabled = True
@@ -199,10 +200,8 @@ def dashboard_page():
 
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
-        account_details = next(account for account in user_accounts if account['account_id'] == selected_account_id)
-
+        
         st.divider()
-        #st.subheader(f"{account_details['name']}")
 
         summary_tiles(
             height=55, 
