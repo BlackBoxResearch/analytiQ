@@ -188,7 +188,7 @@ def dashboard_page():
                 with col2:
                     if button("No", "cancel_delete", '#ca4747', None, False):
                         switch_page("Dashboard")
-                        st.rerun()
+                        #st.rerun()
             
                 if proceed_button:
                     with st.spinner("Deleting account..."):
