@@ -172,7 +172,7 @@ def line_chart(data, x, y, x_label, y_label, height=280, show_labels=True, line_
             gradient='linear',
             stops=[
                 alt.GradientStop(color=fill_color + "00", offset=0),  # 75% transparency at the top
-                alt.GradientStop(color=fill_color + "B3", offset=1)   # 100% transparency at the bottom
+                alt.GradientStop(color=fill_color + "40", offset=1)   # 100% transparency at the bottom
             ],
             x1=1, x2=1, y1=1, y2=0
         ),
