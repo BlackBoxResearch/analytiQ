@@ -21,9 +21,8 @@ def leaderboard_page():
             target_date = datetime(2025, 2, 14, 12, 0, 0)  # Valentine's Day at 12:00 PM
             target_date_js = int(target_date.timestamp() * 1000)  # Convert to milliseconds for JavaScript
 
-            # HTML and JavaScript for real-time countdown
             countdown_html = f"""
-            <div style="height: 50px; display: flex; align-items: center; justify-content: center; font-size: 20px; background-color: #f0f2f6; border-radius: 5px;">
+            <div style="height: 50px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-family: 'Source Sans Pro', sans-serif; color: #E8E8E8; background-color: #171717; border-radius: 5px;">
                 <span id="countdown"></span>
             </div>
             <script>
