@@ -10,13 +10,11 @@ def leaderboard_page():
     with st.expander("Competition Rules", icon=":material/gavel:"):
         st.markdown("Rules here")
     
-    active_leaderboards_l, active_leaderboards_r = st.columns(2, vertical_alignment="bottom")
-    
-    with active_leaderboards_l:
-        st.markdown("**Active Competitions**")
+    st.markdown("**Active Competitions**")
 
-    with active_leaderboards_r:
-        with tile("competition_countdown", 50, True):
+    col1, col2, col3 = st.columns([3],vertical_alignment="top")
+    with col1:
+        with tile("competition_countdown", 40, True):
             # Set the target date and time for the countdown
             target_date = datetime(2025, 2, 14, 12, 0, 0)  # Valentine's Day at 12:00 PM
             target_date_js = int(target_date.timestamp() * 1000)  # Convert to milliseconds for JavaScript
@@ -34,7 +32,7 @@ def leaderboard_page():
                         const days = Math.floor(delta / (1000 * 60 * 60 * 24));
                         const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         const minutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
-                        document.getElementById('countdown').textContent = `${{days}} Days, ${{hours}} Hours, ${{minutes}} Minutes`;
+                        document.getElementById('countdown').textContent = `${{days}} D, ${{hours}} H, ${{minutes}} M`;
                     }} else {{
                         document.getElementById('countdown').textContent = "Countdown Complete!";
                     }}
