@@ -110,7 +110,7 @@ def dashboard_page():
     first_name = st.session_state["first_name"]
     
     st.subheader(f'Welcome, {first_name}!', anchor=False)
-    st.info("This is your **Dashboard** where you can connect your trading accounts, and analyse your performance.")
+    #st.info("This is your **Dashboard** where you can connect your trading accounts, and analyse your performance.")
     
     # Execute the query to fetch user accounts
     query = "SELECT account_id, name, login FROM accounts WHERE user_id = %s AND active = TRUE"
@@ -126,7 +126,7 @@ def dashboard_page():
         account_options = ["No accounts available"]
         select_disabled = True
 
-    select_account_column, add_account_column, delete_account_column = st.columns([2,1,1], vertical_alignment="bottom")
+    select_account_column, add_account_column, account_settings_column = st.columns([2,1,1], vertical_alignment="bottom")
     
     with select_account_column:
         account_selection = st.selectbox("Select Account", account_options, disabled=select_disabled)
@@ -180,19 +180,22 @@ def dashboard_page():
                     except Exception as e:
                         st.error(f"Failed to add account: {e}")
 
-    with delete_account_column:
+    with account_settings_column:
         if account_selection != "No accounts available":
             disabled = False
         else:
             disabled = True
 
-        if button(label="Delete Account",
-                  key="delete-account-button",
-                  color='#ca4747',
-                  icon=":material/delete:",
-                  disabled=disabled,
-            ):
-            delete_account_dialog(selected_account_id)
+        with st.popover("Account Settings", icon=":material/settings:", disabled=disabled, use_container_width=True):
+            st.button("Rename Account", icon=":material/edit:", use_container_width=True)
+
+            if button(label="Delete Account",
+                    key="delete-account-button",
+                    color='#ca4747',
+                    icon=":material/delete:",
+                    disabled=disabled,
+                ):
+                delete_account_dialog(selected_account_id)
 
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
