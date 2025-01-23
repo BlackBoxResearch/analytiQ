@@ -232,7 +232,7 @@ def dashboard_page():
                     height=250,
                     show_labels=False,
                     line_color='#3952f5',
-                    fill_color='#3952f5',
+                    fill_color='#E8E8E8',
                 )
 
         with col2:
