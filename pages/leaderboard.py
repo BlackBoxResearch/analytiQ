@@ -33,8 +33,8 @@ def leaderboard_page():
                         const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         const minutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
                         const seconds = Math.floor((delta % (1000 * 60)) / 1000);
-            
-                        document.getElementById('countdown').textContent = ${{days}}:, ${{hours}}:, ${{minutes}}:, ${{seconds}};
+                        
+                        document.getElementById('countdown').textContent = `${{days.toString().padStart(2, '0')}}:${{hours.toString().padStart(2, '0')}}:${{minutes.toString().padStart(2, '0')}}:${{seconds.toString().padStart(2, '0')}}`;
                     }} else {{
                         document.getElementById('countdown').textContent = "Countdown Complete!";
                     }}
@@ -63,17 +63,26 @@ def leaderboard_page():
 
     with prize_2:
         with tile("prize_2", height=150, border=False):
-            st.markdown("🥈 **2nd Place**")
-            st.caption("⚡ $500 Cash")
-            st.caption("⚡ 1 Month AnalytiQ Pro")
-            st.caption("⚡ $10k 2-Step Challenge")
+            st.markdown(f'''
+                        <div style="line-height: 2.55;">
+                            <p style="margin: 0; font-size: 1em; font-weight: bold; color: #E8E8E8;">🥈 2nd Place</p>
+                            <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ $500 Cash</p>
+                            <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ 1 Months AnalytiQ Pro</p>
+                            <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ $10k 2-Step Challenge</p>
+                        </div>
+                        ''')
 
     with prize_3:
         with tile("prize_3", height=150, border=False):
-            st.markdown("🥉 **3rd Place**")
-            st.caption("⚡ $250 Cash")
-            st.caption("⚡ 1 Month AnalytiQ Plus")
-            st.caption("⚡ $5k 2-Step Challenge")
+            st.markdown(f'''
+                        <div style="line-height: 2.55;">
+                            <p style="margin: 0; font-size: 1em; font-weight: bold; color: #E8E8E8;">🥉 3rd Place</p>
+                            <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ $250 Cash</p>
+                            <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ 1 Months AnalytiQ Plus</p>
+                            <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ $5k 2-Step Challenge</p>
+                        </div>
+                        ''')
+
 
     tile("leaderboard", height=450, border=False)
 
