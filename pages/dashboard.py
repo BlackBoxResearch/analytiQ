@@ -188,6 +188,7 @@ def dashboard_page():
             disabled = True
 
         with st.popover("Settings", icon=":material/settings:", disabled=disabled, use_container_width=True):
+            st.write(selected_account_id)
             st.button("Rename Account", icon=":material/edit:", use_container_width=True)
 
             if button(label="Delete Account",
