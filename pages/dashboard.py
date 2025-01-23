@@ -81,6 +81,30 @@ def get_balances(account_id):
         print(f"Failed to retrieve balances for account_id: {account_id}")
     return balances
 
+@st.dialog("Delete Account")
+def delete_account_dialog(selected_account_id):
+    st.write("Are you sure you want delete this account?")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        proceed_button = st.button("Yes", type="secondary", use_container_width=True)
+
+    with col2:
+        if button("No", "cancel_delete", '#ca4747', None, False):
+            switch_page("Dashboard")
+            #st.rerun()
+
+    if proceed_button:
+        with st.spinner("Deleting account..."):
+            try:
+                run_async_function(undeploy_account, account_id=selected_account_id)
+                st.success("Account successfully deleted!")
+                time.sleep(2)
+                st.rerun()
+            except Exception as e:
+                st.error(f"Failed to delete account: {e}")
+        st.rerun()
+
 def dashboard_page():
     user_id = st.session_state["user_id"]
     first_name = st.session_state["first_name"]
@@ -157,54 +181,23 @@ def dashboard_page():
                         st.error(f"Failed to add account: {e}")
 
     with delete_account_column:
-
         if account_selection != "No accounts available":
             disabled = False
         else:
             disabled = True
 
-        # delete_account_button = st.button("Delete Account", 
-        #                                   icon=":material/delete:", 
-        #                                   use_container_width=True, 
-        #                                   disabled=disabled)
-
-        delete_account_button = button(label="Delete Account",
-                                       key="delete-account-button",
-                                       color='#ca4747',
-                                       icon=":material/delete:",
-                                       disabled=disabled,
-                                       )
-        
-        if delete_account_button:
-
-            @st.dialog("Delete Account")
-            def delete_account_dialog():
-                st.write("Are you sure you want delete this account?")
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    proceed_button = st.button("Yes", type="secondary", use_container_width=True)
-
-                with col2:
-                    if button("No", "cancel_delete", '#ca4747', None, False):
-                        switch_page("Dashboard")
-                        #st.rerun()
-            
-                if proceed_button:
-                    with st.spinner("Deleting account..."):
-                        try:
-                            run_async_function(undeploy_account, account_id=selected_account_id)
-                            st.success("Account successfully deleted!")
-                            time.sleep(2)
-                            st.rerun()
-                        except Exception as e:
-                            st.error(f"Failed to delete account: {e}")
-                    st.rerun()
-                    
-            delete_account_dialog()
+        if button(label="Delete Account",
+                  key="delete-account-button",
+                  color='#ca4747',
+                  icon=":material/delete:",
+                  disabled=disabled,
+            ):
+            delete_account_dialog(selected_account_id)
 
     if account_selection != "No accounts available":
         selected_account_id = account_map[account_selection]
+
+        col1, col2 = st.columns([3,1], vertical_alignment="top")
 
         gain = 55
         win_rate = 64
@@ -231,19 +224,23 @@ def dashboard_page():
             ]
         })
 
-        with tile("performance_overview_chart", 300, border=False):
-            st.markdown("**Performance**")
-            line_chart(
-                data=data,
-                x="Date",
-                y="Portfolio Returns",
-                x_label="Date",
-                y_label="Cumulative Returns",
-                height=250,
-                show_labels=False,
-                line_color='#3952f5',
-                fill_color='#3952f5',
-            )         
+        with col1:
+            with tile("performance_overview_chart", 300, border=False):
+                st.markdown("**Performance**")
+                line_chart(
+                    data=data,
+                    x="Date",
+                    y="Portfolio Returns",
+                    x_label="Date",
+                    y_label="Cumulative Returns",
+                    height=250,
+                    show_labels=False,
+                    line_color='#3952f5',
+                    fill_color='#3952f5',
+                )
+
+        with col2:
+            tile("stats", height=300, border=False)       
 
 if __name__ == "__main__":
     dashboard_page()
