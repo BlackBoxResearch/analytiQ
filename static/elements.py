@@ -34,7 +34,7 @@ def gradient_button(label, key, icon, disabled):
         key=key,
         css_styles=f'''
             button {{
-                background-image: linear-gradient(45deg, {color_1}, {color_2});
+                background: linear-gradient(45deg, {color_1}, {color_2});
                 color: white;
                 border-radius: 0.5rem;
             }}
