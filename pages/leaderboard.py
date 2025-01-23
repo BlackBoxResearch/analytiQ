@@ -63,7 +63,7 @@ def leaderboard_page():
 
     with prize_2:
         with tile("prize_2", height=150, border=False):
-            st.markdown(f'''
+            st.html(f'''
                         <div style="line-height: 2.55;">
                             <p style="margin: 0; font-size: 1em; font-weight: bold; color: #E8E8E8;">🥈 2nd Place</p>
                             <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ $500 Cash</p>
@@ -74,7 +74,7 @@ def leaderboard_page():
 
     with prize_3:
         with tile("prize_3", height=150, border=False):
-            st.markdown(f'''
+            st.html(f'''
                         <div style="line-height: 2.55;">
                             <p style="margin: 0; font-size: 1em; font-weight: bold; color: #E8E8E8;">🥉 3rd Place</p>
                             <p style="margin: 0; font-size: 0.9em; color: #878884;">⚡ $250 Cash</p>
