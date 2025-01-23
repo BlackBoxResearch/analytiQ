@@ -1,6 +1,7 @@
 import streamlit as st
 from utils.user_management import authorise_user, register_user
 import time
+from static.elements import gradient_button
 
 countries = [
     "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia",
@@ -121,7 +122,8 @@ def login_page():
                 unsafe_allow_html=True
             )
 
-            if st.button("Sign Up", icon=":material/app_registration:", use_container_width=True):
+            if gradient_button("Register", "register_dialog", icon=":material/app_registration:", disabled=False):
+            #if st.button("Sign Up", icon=":material/app_registration:", use_container_width=True):
                 sign_up_dialog()
     
 if __name__ == "__main__":

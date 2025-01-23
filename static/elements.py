@@ -14,7 +14,7 @@ caption_color = '#878884'
 
 def button(label, key, color, icon, disabled):
     with stylable_container(
-        key="key-account-button",
+        key=key,
         css_styles=f'''
             button {{
                 background-color:{color};
@@ -29,6 +29,22 @@ def button(label, key, color, icon, disabled):
                         use_container_width=True,
                         disabled=disabled)
 
+def gradient_button(label, key, icon, disabled):
+    with stylable_container(
+        key=key,
+        css_styles=f'''
+            button {{
+                background: linear-gradient(45deg, {color_1}, {color_2})
+                color: white;
+                border-radius: 0.5rem;
+            }}
+            ''',
+        ):
+            return st.button(label=label, 
+                        key=key,
+                        icon=icon, 
+                        use_container_width=True,
+                        disabled=disabled)
 
 def tile(key, height, border):
     border_style = f"1px solid {border_color};" if border else "none;"
